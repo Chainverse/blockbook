@@ -138,7 +138,7 @@ func bindTokenhub(address common.Address, caller bind.ContractCaller, transactor
 // returns, a slice of interfaces for anonymous returns and a struct for named
 // returns.
 func (_Tokenhub *TokenhubRaw) Call(opts *bind.CallOpts, result interface{}, method string, params ...interface{}) error {
-	return _Tokenhub.Contract.TokenhubCaller.contract.Call(opts, result, method, params...)
+	return _Tokenhub.Contract.TokenhubCaller.contract.Call(opts, &[]interface{}{result}, method, params...)
 }
 
 // Transfer initiates a plain transaction to move funds to the contract, calling
@@ -157,7 +157,7 @@ func (_Tokenhub *TokenhubRaw) Transact(opts *bind.TransactOpts, method string, p
 // returns, a slice of interfaces for anonymous returns and a struct for named
 // returns.
 func (_Tokenhub *TokenhubCallerRaw) Call(opts *bind.CallOpts, result interface{}, method string, params ...interface{}) error {
-	return _Tokenhub.Contract.contract.Call(opts, result, method, params...)
+	return _Tokenhub.Contract.contract.Call(opts, &[]interface{}{result}, method, params...)
 }
 
 // Transfer initiates a plain transaction to move funds to the contract, calling
@@ -179,7 +179,7 @@ func (_Tokenhub *TokenhubCaller) BEP2TOKENDECIMALS(opts *bind.CallOpts) (uint8, 
 		ret0 = new(uint8)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "BEP2_TOKEN_DECIMALS")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "BEP2_TOKEN_DECIMALS")
 	return *ret0, err
 }
 
@@ -205,7 +205,7 @@ func (_Tokenhub *TokenhubCaller) BEP2TOKENSYMBOLFORBNB(opts *bind.CallOpts) ([32
 		ret0 = new([32]byte)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "BEP2_TOKEN_SYMBOL_FOR_BNB")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "BEP2_TOKEN_SYMBOL_FOR_BNB")
 	return *ret0, err
 }
 
@@ -231,7 +231,7 @@ func (_Tokenhub *TokenhubCaller) BINDCHANNELID(opts *bind.CallOpts) (uint8, erro
 		ret0 = new(uint8)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "BIND_CHANNELID")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "BIND_CHANNELID")
 	return *ret0, err
 }
 
@@ -257,7 +257,7 @@ func (_Tokenhub *TokenhubCaller) CODEOK(opts *bind.CallOpts) (uint32, error) {
 		ret0 = new(uint32)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "CODE_OK")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "CODE_OK")
 	return *ret0, err
 }
 
@@ -283,7 +283,7 @@ func (_Tokenhub *TokenhubCaller) CROSSCHAINCONTRACTADDR(opts *bind.CallOpts) (co
 		ret0 = new(common.Address)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "CROSS_CHAIN_CONTRACT_ADDR")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "CROSS_CHAIN_CONTRACT_ADDR")
 	return *ret0, err
 }
 
@@ -309,7 +309,7 @@ func (_Tokenhub *TokenhubCaller) ERRORFAILDECODE(opts *bind.CallOpts) (uint32, e
 		ret0 = new(uint32)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "ERROR_FAIL_DECODE")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "ERROR_FAIL_DECODE")
 	return *ret0, err
 }
 
@@ -335,7 +335,7 @@ func (_Tokenhub *TokenhubCaller) GOVCHANNELID(opts *bind.CallOpts) (uint8, error
 		ret0 = new(uint8)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "GOV_CHANNELID")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "GOV_CHANNELID")
 	return *ret0, err
 }
 
@@ -361,7 +361,7 @@ func (_Tokenhub *TokenhubCaller) GOVHUBADDR(opts *bind.CallOpts) (common.Address
 		ret0 = new(common.Address)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "GOV_HUB_ADDR")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "GOV_HUB_ADDR")
 	return *ret0, err
 }
 
@@ -387,7 +387,7 @@ func (_Tokenhub *TokenhubCaller) INCENTIVIZEADDR(opts *bind.CallOpts) (common.Ad
 		ret0 = new(common.Address)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "INCENTIVIZE_ADDR")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "INCENTIVIZE_ADDR")
 	return *ret0, err
 }
 
@@ -413,7 +413,7 @@ func (_Tokenhub *TokenhubCaller) INITMINIMUMRELAYFEE(opts *bind.CallOpts) (*big.
 		ret0 = new(*big.Int)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "INIT_MINIMUM_RELAY_FEE")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "INIT_MINIMUM_RELAY_FEE")
 	return *ret0, err
 }
 
@@ -439,7 +439,7 @@ func (_Tokenhub *TokenhubCaller) LIGHTCLIENTADDR(opts *bind.CallOpts) (common.Ad
 		ret0 = new(common.Address)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "LIGHT_CLIENT_ADDR")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "LIGHT_CLIENT_ADDR")
 	return *ret0, err
 }
 
@@ -465,7 +465,7 @@ func (_Tokenhub *TokenhubCaller) MAXIMUMBEP20SYMBOLLEN(opts *bind.CallOpts) (uin
 		ret0 = new(uint8)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "MAXIMUM_BEP20_SYMBOL_LEN")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "MAXIMUM_BEP20_SYMBOL_LEN")
 	return *ret0, err
 }
 
@@ -491,7 +491,7 @@ func (_Tokenhub *TokenhubCaller) MAXBEP2TOTALSUPPLY(opts *bind.CallOpts) (*big.I
 		ret0 = new(*big.Int)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "MAX_BEP2_TOTAL_SUPPLY")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "MAX_BEP2_TOTAL_SUPPLY")
 	return *ret0, err
 }
 
@@ -517,7 +517,7 @@ func (_Tokenhub *TokenhubCaller) MAXGASFORCALLINGBEP20(opts *bind.CallOpts) (*bi
 		ret0 = new(*big.Int)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "MAX_GAS_FOR_CALLING_BEP20")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "MAX_GAS_FOR_CALLING_BEP20")
 	return *ret0, err
 }
 
@@ -543,7 +543,7 @@ func (_Tokenhub *TokenhubCaller) MAXGASFORTRANSFERBNB(opts *bind.CallOpts) (*big
 		ret0 = new(*big.Int)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "MAX_GAS_FOR_TRANSFER_BNB")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "MAX_GAS_FOR_TRANSFER_BNB")
 	return *ret0, err
 }
 
@@ -569,7 +569,7 @@ func (_Tokenhub *TokenhubCaller) MINIMUMBEP20SYMBOLLEN(opts *bind.CallOpts) (uin
 		ret0 = new(uint8)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "MINIMUM_BEP20_SYMBOL_LEN")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "MINIMUM_BEP20_SYMBOL_LEN")
 	return *ret0, err
 }
 
@@ -595,7 +595,7 @@ func (_Tokenhub *TokenhubCaller) RELAYERHUBCONTRACTADDR(opts *bind.CallOpts) (co
 		ret0 = new(common.Address)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "RELAYERHUB_CONTRACT_ADDR")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "RELAYERHUB_CONTRACT_ADDR")
 	return *ret0, err
 }
 
@@ -621,7 +621,7 @@ func (_Tokenhub *TokenhubCaller) REWARDUPPERLIMIT(opts *bind.CallOpts) (*big.Int
 		ret0 = new(*big.Int)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "REWARD_UPPER_LIMIT")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "REWARD_UPPER_LIMIT")
 	return *ret0, err
 }
 
@@ -647,7 +647,7 @@ func (_Tokenhub *TokenhubCaller) SLASHCHANNELID(opts *bind.CallOpts) (uint8, err
 		ret0 = new(uint8)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "SLASH_CHANNELID")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "SLASH_CHANNELID")
 	return *ret0, err
 }
 
@@ -673,7 +673,7 @@ func (_Tokenhub *TokenhubCaller) SLASHCONTRACTADDR(opts *bind.CallOpts) (common.
 		ret0 = new(common.Address)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "SLASH_CONTRACT_ADDR")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "SLASH_CONTRACT_ADDR")
 	return *ret0, err
 }
 
@@ -699,7 +699,7 @@ func (_Tokenhub *TokenhubCaller) STAKINGCHANNELID(opts *bind.CallOpts) (uint8, e
 		ret0 = new(uint8)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "STAKING_CHANNELID")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "STAKING_CHANNELID")
 	return *ret0, err
 }
 
@@ -725,7 +725,7 @@ func (_Tokenhub *TokenhubCaller) SYSTEMREWARDADDR(opts *bind.CallOpts) (common.A
 		ret0 = new(common.Address)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "SYSTEM_REWARD_ADDR")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "SYSTEM_REWARD_ADDR")
 	return *ret0, err
 }
 
@@ -751,7 +751,7 @@ func (_Tokenhub *TokenhubCaller) TENDECIMALS(opts *bind.CallOpts) (*big.Int, err
 		ret0 = new(*big.Int)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "TEN_DECIMALS")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "TEN_DECIMALS")
 	return *ret0, err
 }
 
@@ -777,7 +777,7 @@ func (_Tokenhub *TokenhubCaller) TOKENHUBADDR(opts *bind.CallOpts) (common.Addre
 		ret0 = new(common.Address)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "TOKEN_HUB_ADDR")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "TOKEN_HUB_ADDR")
 	return *ret0, err
 }
 
@@ -803,7 +803,7 @@ func (_Tokenhub *TokenhubCaller) TOKENMANAGERADDR(opts *bind.CallOpts) (common.A
 		ret0 = new(common.Address)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "TOKEN_MANAGER_ADDR")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "TOKEN_MANAGER_ADDR")
 	return *ret0, err
 }
 
@@ -829,7 +829,7 @@ func (_Tokenhub *TokenhubCaller) TRANSFERINCHANNELID(opts *bind.CallOpts) (uint8
 		ret0 = new(uint8)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "TRANSFER_IN_CHANNELID")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "TRANSFER_IN_CHANNELID")
 	return *ret0, err
 }
 
@@ -855,7 +855,7 @@ func (_Tokenhub *TokenhubCaller) TRANSFERINFAILUREINSUFFICIENTBALANCE(opts *bind
 		ret0 = new(uint8)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "TRANSFER_IN_FAILURE_INSUFFICIENT_BALANCE")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "TRANSFER_IN_FAILURE_INSUFFICIENT_BALANCE")
 	return *ret0, err
 }
 
@@ -881,7 +881,7 @@ func (_Tokenhub *TokenhubCaller) TRANSFERINFAILURENONPAYABLERECIPIENT(opts *bind
 		ret0 = new(uint8)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "TRANSFER_IN_FAILURE_NON_PAYABLE_RECIPIENT")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "TRANSFER_IN_FAILURE_NON_PAYABLE_RECIPIENT")
 	return *ret0, err
 }
 
@@ -907,7 +907,7 @@ func (_Tokenhub *TokenhubCaller) TRANSFERINFAILURETIMEOUT(opts *bind.CallOpts) (
 		ret0 = new(uint8)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "TRANSFER_IN_FAILURE_TIMEOUT")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "TRANSFER_IN_FAILURE_TIMEOUT")
 	return *ret0, err
 }
 
@@ -933,7 +933,7 @@ func (_Tokenhub *TokenhubCaller) TRANSFERINFAILUREUNBOUNDTOKEN(opts *bind.CallOp
 		ret0 = new(uint8)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "TRANSFER_IN_FAILURE_UNBOUND_TOKEN")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "TRANSFER_IN_FAILURE_UNBOUND_TOKEN")
 	return *ret0, err
 }
 
@@ -959,7 +959,7 @@ func (_Tokenhub *TokenhubCaller) TRANSFERINFAILUREUNKNOWN(opts *bind.CallOpts) (
 		ret0 = new(uint8)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "TRANSFER_IN_FAILURE_UNKNOWN")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "TRANSFER_IN_FAILURE_UNKNOWN")
 	return *ret0, err
 }
 
@@ -985,7 +985,7 @@ func (_Tokenhub *TokenhubCaller) TRANSFERINSUCCESS(opts *bind.CallOpts) (uint8, 
 		ret0 = new(uint8)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "TRANSFER_IN_SUCCESS")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "TRANSFER_IN_SUCCESS")
 	return *ret0, err
 }
 
@@ -1011,7 +1011,7 @@ func (_Tokenhub *TokenhubCaller) TRANSFEROUTCHANNELID(opts *bind.CallOpts) (uint
 		ret0 = new(uint8)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "TRANSFER_OUT_CHANNELID")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "TRANSFER_OUT_CHANNELID")
 	return *ret0, err
 }
 
@@ -1037,7 +1037,7 @@ func (_Tokenhub *TokenhubCaller) VALIDATORCONTRACTADDR(opts *bind.CallOpts) (com
 		ret0 = new(common.Address)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "VALIDATOR_CONTRACT_ADDR")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "VALIDATOR_CONTRACT_ADDR")
 	return *ret0, err
 }
 
@@ -1063,7 +1063,7 @@ func (_Tokenhub *TokenhubCaller) AlreadyInit(opts *bind.CallOpts) (bool, error) 
 		ret0 = new(bool)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "alreadyInit")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "alreadyInit")
 	return *ret0, err
 }
 
@@ -1089,7 +1089,7 @@ func (_Tokenhub *TokenhubCaller) Bep20ContractDecimals(opts *bind.CallOpts, arg0
 		ret0 = new(*big.Int)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "bep20ContractDecimals", arg0)
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "bep20ContractDecimals", arg0)
 	return *ret0, err
 }
 
@@ -1115,7 +1115,7 @@ func (_Tokenhub *TokenhubCaller) BscChainID(opts *bind.CallOpts) (uint16, error)
 		ret0 = new(uint16)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "bscChainID")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "bscChainID")
 	return *ret0, err
 }
 
@@ -1141,7 +1141,7 @@ func (_Tokenhub *TokenhubCaller) GetBep2SymbolByContractAddr(opts *bind.CallOpts
 		ret0 = new([32]byte)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "getBep2SymbolByContractAddr", contractAddr)
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "getBep2SymbolByContractAddr", contractAddr)
 	return *ret0, err
 }
 
@@ -1167,7 +1167,7 @@ func (_Tokenhub *TokenhubCaller) GetBoundBep2Symbol(opts *bind.CallOpts, contrac
 		ret0 = new(string)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "getBoundBep2Symbol", contractAddr)
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "getBoundBep2Symbol", contractAddr)
 	return *ret0, err
 }
 
@@ -1193,7 +1193,7 @@ func (_Tokenhub *TokenhubCaller) GetBoundContract(opts *bind.CallOpts, bep2Symbo
 		ret0 = new(common.Address)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "getBoundContract", bep2Symbol)
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "getBoundContract", bep2Symbol)
 	return *ret0, err
 }
 
@@ -1219,7 +1219,7 @@ func (_Tokenhub *TokenhubCaller) GetContractAddrByBEP2Symbol(opts *bind.CallOpts
 		ret0 = new(common.Address)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "getContractAddrByBEP2Symbol", bep2Symbol)
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "getContractAddrByBEP2Symbol", bep2Symbol)
 	return *ret0, err
 }
 
@@ -1245,7 +1245,7 @@ func (_Tokenhub *TokenhubCaller) GetMiniRelayFee(opts *bind.CallOpts) (*big.Int,
 		ret0 = new(*big.Int)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "getMiniRelayFee")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "getMiniRelayFee")
 	return *ret0, err
 }
 
@@ -1271,7 +1271,7 @@ func (_Tokenhub *TokenhubCaller) RelayFee(opts *bind.CallOpts) (*big.Int, error)
 		ret0 = new(*big.Int)
 	)
 	out := ret0
-	err := _Tokenhub.contract.Call(opts, out, "relayFee")
+	err := _Tokenhub.contract.Call(opts, &[]interface{}{out}, "relayFee")
 	return *ret0, err
 }
 
