@@ -324,6 +324,11 @@ func (c *blockChainWithMetrics) EthereumTypeGetErc20ContractBalance(addrDesc, co
 	return c.b.EthereumTypeGetErc20ContractBalance(addrDesc, contractDesc)
 }
 
+func (c *blockChainWithMetrics) EthereumTypeGetReceipt(txid string) (receipt *bchain.TransactionReceipt, err error) {
+	defer func(s time.Time) { c.observeRPCLatency("EthereumTypeGetReceipt", s, err) }(time.Now())
+	return c.b.EthereumTypeGetReceipt(txid)
+}
+
 func (c *blockChainWithMetrics) BscTypeGetTokenHub()(th *bchain.Tokenhub, err error) {
 	defer func(s time.Time) { c.observeRPCLatency("BscTypeGetTokenHub", s, err) }(time.Now())
 	return c.b.BscTypeGetTokenHub()
