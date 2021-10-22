@@ -93,6 +93,7 @@ type RocksDB struct {
 	ro           *gorocksdb.ReadOptions
 	cfh          []*gorocksdb.ColumnFamilyHandle
 	chainParser  bchain.BlockChainParser
+	chain        bchain.BlockChain
 	is           *common.InternalState
 	metrics      *common.Metrics
 	cache        *gorocksdb.Cache
@@ -151,7 +152,7 @@ func NewRocksDB(path string, cacheSize, maxOpenFiles int, parser bchain.BlockCha
 	chainType := parser.GetChainType()
 	if chainType == bchain.ChainBitcoinType {
 		cfNames = append(cfNames, cfNamesBitcoinType...)
-	} else if chainType == bchain.ChainEthereumType {
+	} else if chainType == bchain.ChainEthereumType || chainType == bchain.ChainBscType {
 		cfNames = append(cfNames, cfNamesEthereumType...)
 	} else {
 		return nil, errors.New("Unknown chain type")
@@ -164,7 +165,30 @@ func NewRocksDB(path string, cacheSize, maxOpenFiles int, parser bchain.BlockCha
 	}
 	wo := gorocksdb.NewDefaultWriteOptions()
 	ro := gorocksdb.NewDefaultReadOptions()
-	return &RocksDB{path, db, wo, ro, cfh, parser, nil, metrics, c, maxOpenFiles, connectBlockStats{}}, nil
+	return &RocksDB{path, db, wo, ro, cfh, parser, nil,nil, metrics, c, maxOpenFiles, connectBlockStats{}}, nil
+}
+
+func NewRocksDBWithChain(path string, cacheSize, maxOpenFiles int, metrics *common.Metrics, chain bchain.BlockChain) (d *RocksDB, err error) {
+	glog.Infof("rocksdb: opening %s, required data version %v, cache size %v, max open files %v", path, dbVersion, cacheSize, maxOpenFiles)
+
+	cfNames = append([]string{}, cfBaseNames...)
+	chainType := chain.GetChainParser().GetChainType()
+	if chainType == bchain.ChainBitcoinType {
+		cfNames = append(cfNames, cfNamesBitcoinType...)
+	} else if chainType == bchain.ChainEthereumType || chainType == bchain.ChainBscType {
+		cfNames = append(cfNames, cfNamesEthereumType...)
+	} else {
+		return nil, errors.New("Unknown chain type")
+	}
+
+	c := gorocksdb.NewLRUCache(uint64(cacheSize))
+	db, cfh, err := openDB(path, c, maxOpenFiles)
+	if err != nil {
+		return nil, err
+	}
+	wo := gorocksdb.NewDefaultWriteOptions()
+	ro := gorocksdb.NewDefaultReadOptions()
+	return &RocksDB{path, db, wo, ro, cfh, chain.GetChainParser(), chain, nil, metrics, c, maxOpenFiles, connectBlockStats{}}, nil
 }
 
 func (d *RocksDB) closeDB() error {
@@ -465,9 +489,16 @@ func (d *RocksDB) ConnectBlock(block *bchain.Block) error {
 		if err := d.storeAndCleanupBlockTxs(wb, block); err != nil {
 			return err
 		}
-	} else if chainType == bchain.ChainEthereumType {
+	} else if chainType == bchain.ChainEthereumType || chainType == bchain.ChainBscType {
 		addressContracts := make(map[string]*AddrContracts)
-		blockTxs, err := d.processAddressesEthereumType(block, addresses, addressContracts)
+		var blockTxs []ethBlockTx
+		var err error
+		if chainType == bchain.ChainBscType{
+			blockTxs, err = d.processAddressesBscType(block, addresses, addressContracts)
+		}else{
+			blockTxs, err = d.processAddressesEthereumType(block, addresses, addressContracts)
+		}
+
 		if err != nil {
 			return err
 		}

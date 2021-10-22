@@ -15,8 +15,9 @@ import (
 // 2) rocksdb seems to handle better fewer larger batches than continuous stream of smaller batches
 
 type bulkAddresses struct {
-	bi        BlockInfo
-	addresses addressesMap
+	bi             BlockInfo
+	addresses      addressesMap
+	erc20Contracts []string
 }
 
 // BulkConnect is used to connect blocks in bulk, faster but if interrupted inconsistent way
@@ -274,6 +275,67 @@ func (b *BulkConnect) parallelStoreAddressContracts(c chan error, all bool) {
 	c <- nil
 }
 
+func (b *BulkConnect) connectBlockBscType(block *bchain.Block, storeBlockTxs bool) error {
+	addresses := make(addressesMap)
+	blockTxs, err := b.d.processAddressesBscType(block, addresses, b.addressContracts)
+	if err != nil {
+		return err
+	}
+	var storeAddrContracts chan error
+	var sa bool
+	if len(b.addressContracts) > maxBulkAddrContracts {
+		sa = true
+		storeAddrContracts = make(chan error)
+		go b.parallelStoreAddressContracts(storeAddrContracts, false)
+	}
+
+	newContracts := b.d.findNewContract(block)
+	glog.Infof("%d contracts created in block %d", len(newContracts), block.Height)
+
+	b.bulkAddresses = append(b.bulkAddresses, bulkAddresses{
+		bi: BlockInfo{
+			Hash:   block.Hash,
+			Time:   block.Time,
+			Txs:    uint32(len(block.Txs)),
+			Size:   uint32(block.Size),
+			Height: block.Height,
+		},
+		addresses:      addresses,
+		erc20Contracts: newContracts,
+	})
+	b.bulkAddressesCount += len(addresses)
+	// open WriteBatch only if going to write
+	if sa || b.bulkAddressesCount > maxBulkAddresses || storeBlockTxs {
+		start := time.Now()
+		wb := gorocksdb.NewWriteBatch()
+		defer wb.Destroy()
+		bac := b.bulkAddressesCount
+		if sa || b.bulkAddressesCount > maxBulkAddresses {
+			if err := b.storeBulkAddresses(wb); err != nil {
+				return err
+			}
+		}
+		if storeBlockTxs {
+			if err := b.d.storeAndCleanupBlockTxsEthereumType(wb, block, blockTxs); err != nil {
+				return err
+			}
+		}
+		if err := b.d.db.Write(b.d.wo, wb); err != nil {
+			return err
+		}
+		if bac > b.bulkAddressesCount {
+			glog.Info("rocksdb: height ", b.height, ", stored ", bac, " addresses, done in ", time.Since(start))
+		}
+	}
+
+	if storeAddrContracts != nil {
+		if err := <-storeAddrContracts; err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func (b *BulkConnect) connectBlockEthereumType(block *bchain.Block, storeBlockTxs bool) error {
 	addresses := make(addressesMap)
 	blockTxs, err := b.d.processAddressesEthereumType(block, addresses, b.addressContracts)
@@ -336,6 +398,8 @@ func (b *BulkConnect) ConnectBlock(block *bchain.Block, storeBlockTxs bool) erro
 		return b.connectBlockBitcoinType(block, storeBlockTxs)
 	} else if b.chainType == bchain.ChainEthereumType {
 		return b.connectBlockEthereumType(block, storeBlockTxs)
+	} else if b.chainType == bchain.ChainBscType {
+		return b.connectBlockBscType(block, storeBlockTxs)
 	}
 	// for default is to connect blocks in non bulk mode
 	return b.d.ConnectBlock(block)
