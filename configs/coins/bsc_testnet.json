@@ -11,7 +11,7 @@
     "backend_p2p": 38398,
     "backend_http": 8198,
     "blockbook_internal": 9098,
-    "blockbook_public": 9198,
+    "blockbook_public": 9198
   },
   "ipc": {
     "rpc_url_template": "ws://127.0.0.1:{{.Ports.BackendRPC}}",
